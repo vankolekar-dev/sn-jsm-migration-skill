@@ -1,0 +1,31 @@
+{
+  "name": "My Automation Rule",
+  "description": "Description of what this rule does",
+  "state": "ENABLED",
+  "trigger": {
+    "component": {
+      "schemaVersion": 1,
+      "type": "jira.issue.created"
+    }
+  },
+  "conditions": {
+    "component": {
+      "schemaVersion": 1,
+      "type": "jira.issue.condition.jql",
+      "value": {
+        "jql": "project = YOUR_PROJECT_KEY"
+      }
+    }
+  },
+  "actions": [
+    {
+      "component": {
+        "schemaVersion": 1,
+        "type": "jira.issue.assign",
+        "value": {
+          "assignee": { "accountId": "ACCOUNT_ID" }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+# Credentials — never commit these
+.env
+*.env
+config.local.*
+*_token.txt
+*_credentials.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+.venv/
+env/
+
+# Test output
+/tmp/
+*.json.bak
+*_output.json
+*_test_*.json
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.iml

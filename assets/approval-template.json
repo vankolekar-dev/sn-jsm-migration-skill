@@ -1,0 +1,67 @@
+{
+  "name": "Approval Notification Flow",
+  "description": "Notify approvers, handle approval/rejection, transition issue",
+  "state": "ENABLED",
+  "rules": [
+    {
+      "name": "1. Notify approver when approval required",
+      "trigger": { "component": { "schemaVersion": 1, "type": "jira.issue.approval.required" } },
+      "actions": [
+        {
+          "component": {
+            "schemaVersion": 1,
+            "type": "jira.issue.outgoing.email",
+            "value": {
+              "to": ["{{issue.approvers.email}}"],
+              "subject": "Action Required: Approve {{issue.key}} - {{issue.summary}}",
+              "body": "Hello,\n\nYour approval is required for: {{issue.url}}\n\nPlease review and approve or reject."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. On approval - transition and notify reporter",
+      "trigger": { "component": { "schemaVersion": 1, "type": "jira.issue.approval.approved" } },
+      "actions": [
+        {
+          "component": {
+            "schemaVersion": 1,
+            "type": "jira.issue.transition",
+            "value": { "transition": { "name": "Start Progress" } }
+          }
+        },
+        {
+          "component": {
+            "schemaVersion": 1,
+            "type": "jira.issue.comment",
+            "value": {
+              "comment": {
+                "version": 1, "type": "doc",
+                "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "✅ Your request has been approved and is now being processed." }] }]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. On rejection - notify reporter",
+      "trigger": { "component": { "schemaVersion": 1, "type": "jira.issue.approval.rejected" } },
+      "actions": [
+        {
+          "component": {
+            "schemaVersion": 1,
+            "type": "jira.issue.comment",
+            "value": {
+              "comment": {
+                "version": 1, "type": "doc",
+                "content": [{ "type": "paragraph", "content": [{ "type": "text", "text": "❌ Your request has been rejected. Please contact IT for more information." }] }]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
