@@ -115,6 +115,22 @@ python3 scripts/sn_to_jsm.py --input /path/to/export.xml \
 | `--skip-auto` | Skip automation rule creation (saves JSON files only) |
 | `--verbose` | Show HTTP response details |
 
+## Live Production Discovery
+
+Use the live assessor for approved, read-only discovery of a customer ServiceNow instance. Store Basic-auth credentials in macOS Keychain; do not pass secrets as command arguments.
+
+```bash
+python3 scripts/sn_live_assessor.py \
+    --instance https://customer.service-now.com \
+    --auth basic-keychain \
+    --deep-discovery \
+    --include-script-source \
+    --report deep-assessment.md \
+    --output deep-assessment.json
+```
+
+`--deep-discovery` paginates the complete CMDB and `cmdb_rel_ci` inventory, yielding exact run-time CI/class/relationship counts. `--include-script-source` requires explicit customer approval: source bodies are analyzed only in process memory, while saved output contains only SHA-256 fingerprints, line/byte counts, and risk indicators—not script text. The live assessor stops on Table API failures during deep discovery instead of silently reporting incomplete results.
+
 ## Scripts Overview
 
 | Script | Purpose |

@@ -186,6 +186,14 @@ python3 ~/.rovodev/skills/jsm-workflow-builder/scripts/sn_to_jsm.py \
 
 ---
 
+## 🔎 Production Live Discovery
+
+For approved customer environments, `scripts/sn_live_assessor.py` supports a read-only ServiceNow assessment. Use Keychain-backed Basic authentication for local testing, or OAuth client credentials where customer policy permits.
+
+- `--deep-discovery` performs complete pagination for CMDB CIs and relationships.
+- `--include-script-source` performs in-memory static analysis of business and client scripts; reports retain only fingerprints and derived indicators, never source text.
+- Deep discovery fails fast on API errors to prevent incomplete CMDB counts from being reported as exact.
+
 ## ⚠️ Known API Limitations (Jira Cloud)
 
 | Capability | Via API | Via UI | Notes |
